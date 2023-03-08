@@ -8,6 +8,7 @@ const initialState = {
     characters: [],
     pageSize: 8,
     totalUsersCount: 100,
+    formValue: ''
 }
 
 const charactersReducer = (state = initialState, action) => {

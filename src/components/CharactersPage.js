@@ -1,6 +1,5 @@
-import logo from '../img/logo.png'
-import * as Yup from 'yup';
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import logo from '../img/logo.png';
+import SearchForm from './SearchForm';
 
 
 const CharactersPage = (props) => {
@@ -8,7 +7,7 @@ const CharactersPage = (props) => {
         <div>
             <img src={logo} alt='Logo' />
             <div>
-                <LoginForm/>
+                <SearchForm/>
             </div>
             {props.characters.map(character => {
                     return <div>{character.name}</div>
@@ -19,36 +18,6 @@ const CharactersPage = (props) => {
 
 
 
-const LoginForm = ({ onSubmit }) => {
-    const handleSubmit = (values) => {
-        console.log(values);
-        // your submission logic here
-    };
-    const initialValues = {
-        field: ''
-    };
 
-    const validationSchema = Yup.object({
-        field: Yup.string().required('Required')
-    })
-
-    return <Formik initialValues={initialValues} validateOnBlur onSubmit={handleSubmit} validationSchema={validationSchema}>
-
-            <Form>
-                <Field
-            type="text"
-            name="field"
-            onChange={(e) => {
-              e.persist();
-              handleSubmit(e.target.value);
-            }}
-            onBlur={(e) => {
-              e.persist();
-              handleSubmit(e.target.value);
-            }}
-          />
-            </Form>
-    </Formik>
-}
 
 export default CharactersPage
