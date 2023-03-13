@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { requestCharacters } from "../redux/charactersReducer";
+import { requestCharacters, sendFormValue, filterCharacters } from "../redux/charactersReducer";
 import CharactersPage from "./CharactersPage";
 
 
@@ -10,11 +10,16 @@ class CharactersContainer extends React.Component {
         
     }
 
+    filterNames(value) {
+        const regexp = new RegExp(value, 'gi');
+        const filteredCharacters = this.props.characters.filter(character => regexp.test(character.name));
+        this.props.filterCharacters(filteredCharacters)
+    }
+
     render() {
         return (
             <div>
-                <CharactersPage characters={this.props.characters} />
-                
+                <CharactersPage characters={this.props.filteredArray} sendFormValue={this.props.sendFormValue} filterNames={this.filterNames} />
             </div>
         )
     }
@@ -22,8 +27,10 @@ class CharactersContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        characters: state.mainPage.characters
+        characters: state.mainPage.characters,
+        formValue: state.mainPage.formValue,
+        filteredArray: state.mainPage.filteredArray
     }
 }
 
-export default connect(mapStateToProps, {requestCharacters})(CharactersContainer);
+export default connect(mapStateToProps, {requestCharacters, sendFormValue, filterCharacters})(CharactersContainer);

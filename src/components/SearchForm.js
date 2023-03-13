@@ -3,12 +3,14 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 
 
 const SearchForm = (props) => {
-    const handleSubmit = (values) => {
-        console.log(values);
+    const handleSubmit = (value) => {
+        console.log(value);
         // your submission logic here
+        props.sendFormValue(value);
+        props.filterNames(value);
     };
     const initialValues = {
-        field: ''
+        term: ''
     };
 
     const validationSchema = Yup.object({
@@ -20,13 +22,13 @@ const SearchForm = (props) => {
             <Form>
                 <Field
             type="text"
-            name="field"
+            name="term"
             onBlur={(e) => {
               e.persist();
               handleSubmit(e.target.value);
             }}
             />
-            <ErrorMessage name={'field'} />
+            <ErrorMessage name={'term'} />
             </Form>
     </Formik>
 }
