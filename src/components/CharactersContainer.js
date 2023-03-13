@@ -1,25 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
-import { requestCharacters, sendFormValue, filterCharacters } from "../redux/charactersReducer";
+import { requestCharacters, sendFormValue } from "../redux/charactersReducer";
 import CharactersPage from "./CharactersPage";
 
 
 class CharactersContainer extends React.Component {
     componentDidMount() {
-        this.props.requestCharacters();
+        const searchTerm = localStorage.getItem('searchTerm') || '';
+        this.props.requestCharacters(searchTerm);
         
     }
 
-    filterNames(value) {
-        const regexp = new RegExp(value, 'gi');
-        const filteredCharacters = this.props.characters.filter(character => regexp.test(character.name));
-        this.props.filterCharacters(filteredCharacters)
+    onFilterChange = (searchTerm) => {
+        this.props.requestCharacters(searchTerm);
+        localStorage.setItem('searchTerm', searchTerm);
     }
 
     render() {
         return (
             <div>
-                <CharactersPage characters={this.props.filteredArray} sendFormValue={this.props.sendFormValue} filterNames={this.filterNames} />
+                <CharactersPage characters={this.props.characters} sendFormValue={this.props.sendFormValue} onFilterChange={this.onFilterChange} />
             </div>
         )
     }
@@ -29,8 +29,8 @@ const mapStateToProps = (state) => {
     return {
         characters: state.mainPage.characters,
         formValue: state.mainPage.formValue,
-        filteredArray: state.mainPage.filteredArray
+        searchTerm: state.mainPage.searchTerm
     }
 }
 
-export default connect(mapStateToProps, {requestCharacters, sendFormValue, filterCharacters})(CharactersContainer);
+export default connect(mapStateToProps, {requestCharacters, sendFormValue})(CharactersContainer);

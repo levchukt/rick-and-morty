@@ -7,10 +7,10 @@ const CharactersPage = (props) => {
         <div>
             <img src={logo} alt='Logo' />
             <div>
-                <SearchForm sendFormValue={props.sendFormValue} filterNames={props.filterNames} />
+                <SearchForm onFilterChange={props.onFilterChange} />
             </div>
             {props.characters.sort((a, b) => a.name.localeCompare(b.name)).map(character => {
-                    return <div>{character.name}</div>
+                    return <div key={character.id}>{character.name}</div>
                 })}
         </div>
     )

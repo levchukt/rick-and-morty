@@ -9,6 +9,7 @@ const SET_FILTER = 'SET_FILTER';
 const initialState = {
     characters: [],
     pageSize: 10,
+    searchTerm: ''
 }
 
 const charactersReducer = (state = initialState, action) => {
@@ -17,12 +18,16 @@ const charactersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 characters: action.characters,
-                filteredArray: action.characters
             }
         case SET_FORM_VALUE:
             return {
                 ...state,
                 formValue: action.text
+            }
+        case SET_FILTER:
+            return {
+                ...state,
+                searchTerm: action.term
             }
         default:
             return state
@@ -30,35 +35,26 @@ const charactersReducer = (state = initialState, action) => {
 }
 
 
-const setCharacters = (characters) => ({type: SET_CHARACTERS, characters })
+const setCharacters = (characters) => ({ type: SET_CHARACTERS, characters });
+const setFormValue = (text) => ({ type: SET_FORM_VALUE, text });
+const setFilter = (term) => ({ type: SET_FILTER, term });
 
-export const requestCharacters = () => {
+export const requestCharacters = (term) => {
     return async (dispatch) => {
         
-        let responce = await charactersAPI.getCharacters();
+        let responce = await charactersAPI.getCharacters(term);
         const characters = responce.data.results
-        dispatch(setCharacters(characters))
+        dispatch(setFilter(term))
+        dispatch(setCharacters(characters, term))
+        
     }
 }
 
-const setFormValue = (text) => ({ type: SET_FORM_VALUE, text});
+
 
 export const sendFormValue = (text) => {
     return (dispatch) => {
         dispatch(setFormValue(text))
-    }
-}
-
-const setFilter = (filteredCharacters) => {
-    return {
-        type: SET_FILTER,
-        filteredCharacters
-    }
-}
-
-export const filterCharacters = (filteredCharacters) => {
-    return (dispatch) => {
-        dispatch(setFilter(filteredCharacters))
     }
 }
 

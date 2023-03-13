@@ -4,10 +4,9 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 
 const SearchForm = (props) => {
     const handleSubmit = (value) => {
-        console.log(value);
+        // console.log(value);
         // your submission logic here
-        props.sendFormValue(value);
-        props.filterNames(value);
+        props.onFilterChange(value)
     };
     const initialValues = {
         term: ''
@@ -25,8 +24,8 @@ const SearchForm = (props) => {
             name="term"
             onBlur={(e) => {
               e.persist();
-              handleSubmit(e.target.value);
-            }}
+                handleSubmit(e.target.value);
+                }}
             />
             <ErrorMessage name={'term'} />
             </Form>

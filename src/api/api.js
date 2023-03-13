@@ -8,10 +8,7 @@ const instance = axios.create({
 })
 
 export const charactersAPI = {
-    getCharacters() {
-        return instance.get('/character')
+    getCharacters(name = '') {
+        return instance.get(`/character/?name=${name}`)
     },
-    findCharacters(query) {
-        return instance.get(`/character/?name=${query}`)
-    }
 }
