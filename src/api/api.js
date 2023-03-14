@@ -11,4 +11,7 @@ export const charactersAPI = {
     getCharacters(name = '') {
         return instance.get(`/character/?name=${name}`)
     },
+    getCharacter(id) {
+        return instance.get(`/character/${id}`)
+    }
 }

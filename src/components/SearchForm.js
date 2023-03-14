@@ -18,7 +18,7 @@ const SearchForm = (props) => {
 
     return <Formik initialValues={initialValues} validateOnBlur onSubmit={handleSubmit} validationSchema={validationSchema}>
 
-            <Form>
+            <Form >
                 <Field
             type="text"
             name="term"
