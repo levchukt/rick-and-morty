@@ -2,7 +2,6 @@ import { NavLink } from "react-router-dom";
 
 
 const CharacterPage = ({ profile }) => {
-    console.log(profile);
     return (
         <div>
             <div className="backButton">
@@ -11,7 +10,7 @@ const CharacterPage = ({ profile }) => {
             </div>
             <div>
                 <div className="bigLogo">
-                    <img src={profile.image} />
+                    <img src={profile.image} alt='avatar'/>
                 </div>
                 <h1>{profile.name}</h1>
                 <h3>Informations</h3>
@@ -42,4 +41,7 @@ const CharacterPage = ({ profile }) => {
     )
 }
 
-export default CharacterPage
+
+
+
+export default CharacterPage;

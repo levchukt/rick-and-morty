@@ -1,53 +1,97 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { getCharacter } from '../redux/charactersReducer';
-import {
-    useLocation,
-    useNavigate,
-    useParams,
-} from "react-router-dom";
-import CharacterPage from './CharacterPage';
-import { compose } from 'redux';
+// import React from 'react';
+// import { connect } from 'react-redux';
+// import { getCharacter } from '../redux/charactersReducer';
+// import {
+//     useParams,
+// } from "react-router-dom";
+// import CharacterPage from './CharacterPage';
+// import { compose } from 'redux';
+// import Loader from './common/Loader';
 
+// class CharacterPageContainer extends React.Component  {
+//     componentDidMount() {
+//         let userId = this.props.params.characterId;
+//         this.props.getCharacter(userId);
+//         console.log(this.props.profile);
+//     }
 
-class ProfileContainer extends React.Component  {
-    componentDidMount() {
-        let userId = this.props.router.params.characterId;
-        this.props.getCharacter(userId);
-        console.log(userId);
-    }
+//     componentDidUpdate() {
+//         let userId = this.props.params.characterId;
+//         this.props.getCharacter(userId);
+//     }
 
-    render() {
-        return (
-            <CharacterPage profile={this.props.profile} />
-        )
+//     render() {
         
-    }
-} 
+//         return (
+//             <>
+//                 {/* {this.props.isLoading ? <Loader /> : <CharacterPage profile={this.props.profile} /> }   */}
+//                 <CharacterPage profile={this.props.profile} />
+//             </>
+//         )
+        
+//     }
+// }
 
-function withRouter(Component) {
-    function ComponentWithRouterProp(props) {
-        let location = useLocation();
-        let navigate = useNavigate();
-        let params = useParams();
-        return (
-            <Component
-                {...props}
-                router={{ location, navigate, params }}
-            />
-        );
-    }
+// function withRouter(Component) {
+//     function ComponentWithRouterProp(props) {
+//         let params = useParams();
+//         return (
+//             <Component
+//                 params={params}
+//             />
+//         );
+//     }
 
-    return ComponentWithRouterProp;
-}
+//     return ComponentWithRouterProp;
+// }
+
+// const mapStateToProps = (state) => {
+//     return {
+//         profile: state.mainPage.profile,
+//         isLoading: state.mainPage.isLoading
+//     }
+// }
+
+
+
+// export default compose(
+//   withRouter,
+//   connect(mapStateToProps, { getCharacter })
+// )(CharacterPageContainer);
+
+
+
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getCharacter } from "../redux/charactersReducer";
+import CharacterPage from "./CharacterPage"
+
+const CharacterPageContainer = ({ character, getCharacter, isLoading, match }) => {
+    const {characterId} = useParams();
+
+  useEffect(() => {
+    getCharacter(characterId);
+  }, [getCharacter, characterId]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!character) {
+    return <div>Character not found.</div>;
+  }
+
+  return (
+    <div>
+        <CharacterPage profile={character} /> 
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => ({
-    profile: state.mainPage.profile,
-})
+  character: state.mainPage.profile,
+  isLoading: state.mainPage.isLoading,
+});
 
-
-export default compose(
-    connect(mapStateToProps, { getCharacter }),
-    withRouter,
-)(ProfileContainer)
-
+export default connect(mapStateToProps, { getCharacter })(CharacterPageContainer);

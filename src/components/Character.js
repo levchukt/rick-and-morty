@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom"
 
-const Character = ({character}) => {
+const Character = ({ character }) => {
     return (
         <NavLink to={`/character/${character.id}`}>
             <div className="character">
