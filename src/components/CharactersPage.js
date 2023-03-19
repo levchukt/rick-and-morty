@@ -5,14 +5,16 @@ import SearchForm from './SearchForm';
 
 const CharactersPage = (props) => {
     return (
-        <div>
-            <img src={logo} alt='Logo' />
+        <div className='charactersPage'>
+            <div className='logo'><img src={logo} alt='Logo' /></div>
             <div>
                 <SearchForm onFilterChange={props.onFilterChange} />
             </div>
-            {props.characters.sort((a, b) => a.name.localeCompare(b.name)).map(character => {
-                    return <Character key={character.id} character={character}></Character>
-                })}
+            <div className='characters'>
+                {props.characters.sort((a, b) => a.name.localeCompare(b.name)).map(character => {
+                        return <Character key={character.id} character={character}></Character>
+                    })}
+            </div >
         </div>
     )
 }

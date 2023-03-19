@@ -4,9 +4,11 @@ const Character = ({ character }) => {
     return (
         <NavLink to={`/character/${character.id}`}>
             <div className="character">
-                <img src={character.image} alt='Avatar' />
-                <h3 className="caharacterName">{character.name}</h3>
-                <p className="characterText">{character.species} </p>
+                <img className="characterLogo" src={character.image} alt='Avatar' />
+                <div className="characterTextBlock">
+                    <h3 className="characterName">{character.name}</h3>
+                    <p className="characterText">{character.species} </p>
+                </div >
             </div>
         </NavLink>
     )

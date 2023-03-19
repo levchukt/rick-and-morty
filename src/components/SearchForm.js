@@ -18,8 +18,9 @@ const SearchForm = (props) => {
 
     return <Formik initialValues={initialValues} validateOnBlur onSubmit={handleSubmit} validationSchema={validationSchema}>
 
-            <Form >
-                <Field
+            <Form className='form'>
+            <Field className='input'
+                placeholder='Filter by name...'
             type="text"
             name="term"
             onBlur={(e) => {
